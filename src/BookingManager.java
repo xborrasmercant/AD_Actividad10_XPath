@@ -12,22 +12,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BookingManager {
-    File bookingsFile;
     ArrayList<Booking> bookingsCollection = new ArrayList<>();
-
 
     public static void main(String[] args) {
         BookingManager bm = new BookingManager();
         // Initialization of objects
+
+        InformationXMLCreator xmlCreator = new InformationXMLCreator();
         Scanner input = new Scanner(System.in);
         String i;
 
         // Main menu
         while (true) {
+            // Bookings File is loaded at the beginning and after each option selected.
+            bm.loadBookingsFile();
+
             System.out.println();
             System.out.println("===============================");
             System.out.println("1. Show existing bookings");
-            System.out.println("2. Generate IDs XML");
+            System.out.println("2. Generate Information XML");
             System.out.println("3. Exit");
             System.out.println("===============================");
 
@@ -37,11 +40,11 @@ public class BookingManager {
 
             switch (i) {
                 case "1":
-                    bm.loadBookingsFile();
                     bm.printAllBookings();
                     break;
                 case "2":
-                    System.out.println("Generate XML File");
+                    xmlCreator.createInformationArray(bm.bookingsCollection);
+                    xmlCreator.createXMLFile();
                     break;
                 case "3":
                     System.exit(0);
